@@ -6,6 +6,10 @@ const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 
 startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", () => {
+  currentQuestionIndex++;
+  setNextQuestion();
+});
 
 function startGame() {
   startButton.classList.add("hide");
@@ -36,6 +40,7 @@ function showQuestion(question) {
 }
 
 function resetState() {
+  clearStatusClass(document.body);
   nextButton.classList.add("hide");
   while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild);
@@ -52,6 +57,12 @@ function selectAnswer(e) {
   Array.from(answerButtonsElement.children).forEach((button) => {
     setStatusClass(button, button.dataset.correct);
   });
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove("hide");
+  } else {
+    startButton.innerText = "Restart";
+    startButton.classList.remove("hide");
+  }
 }
 
 // create setStatusClass function
@@ -78,6 +89,24 @@ const questions = [
     answers: [
       { text: "4", correct: true },
       { text: "22", correct: false },
+    ],
+  },
+  {
+    question: "What is 13 * 2?",
+    answers: [
+      { text: "26", correct: true },
+      { text: "213", correct: false },
+      { text: "114", correct: false },
+      { text: "13", correct: false },
+    ],
+  },
+  {
+    question: "What is √64?",
+    answers: [
+      { text: "7", correct: false },
+      { text: "6", correct: false },
+      { text: "8", correct: true },
+      { text: "13", correct: false },
     ],
   },
 ];
