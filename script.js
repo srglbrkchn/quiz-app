@@ -45,6 +45,30 @@ function resetState() {
 function selectAnswer(e) {
   const selectedButton = e.target;
   const correct = selectedButton.dataset.correct;
+  // set status class for body based on chosen answer
+  setStatusClass(document.body, correct);
+
+  // loop through our buttons and set a class for them based on user's chosen answer
+  Array.from(answerButtonsElement.children).forEach((button) => {
+    setStatusClass(button, button.dataset.correct);
+  });
+}
+
+// create setStatusClass function
+function setStatusClass(element, correct) {
+  // clear any status the element already has
+  clearStatusClass(element);
+  if (correct) {
+    element.classList.add("correct");
+  } else {
+    element.classList.add("wrong");
+  }
+}
+
+// function to remove status classes
+function clearStatusClass(element) {
+  element.classList.remove("correct");
+  element.classList.remove("wrong");
 }
 
 // create list of questions
